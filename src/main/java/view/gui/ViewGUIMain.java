@@ -1,41 +1,141 @@
 package view.gui;
 
-import view.View;
+import controller.Methods;
+import module.Artifact;
+import module.Hero;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+import static controller.Methods.*;
+import static javax.swing.JOptionPane.showInputDialog;
+
 public class ViewGUIMain extends JFrame {
-    private JPanel panelMain;
+    public JFrame frame = new JFrame();
+    public JPanel panelMain;
     private JButton buttonConsole;
     private JPanel cardLayout;
-    private JPanel panelStart;
-    private JPanel panelCreateHero;
+    public JPanel panelStart;
+    public JPanel panelCreateHero;
     private JButton buttonCreateHero;
-    private JButton ButtonExistingHero;
-    private JPanel panelExistingHero;
+    private JButton buttonExistingHero;
+    public JPanel panelExistingHero;
+    private JButton buttonCHMain;
+    private JButton buttonEHMain;
+    private JButton buttonSpiderman;
+    private JButton buttonSuperman;
+    private JTextPane supermanTextPane;
+    private JTextPane spidermanTextPane;
+    public JPanel panelGame;
+    private JButton buttonGMain;
+    private JButton buttonSave;
+    private JTextArea textAreaEH;
+    private JButton buttonSelectHero;
+    private JTextArea textAreaGame;
+    public JTextArea textAreaSpecs;
+    private String heroName;
 
-    public ViewGUIMain(){
-        JFrame frame = new JFrame();
-        frame.setPreferredSize(new Dimension(500,400));
+    public ViewGUIMain(view.Views view){
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+        frame.setPreferredSize(new Dimension(520,400));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
             }
         });
-        buttonConsole.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.setVisible(false);
-            }
-        });
+        activateButtons(view);
         frame.setContentPane(panelMain);
-        frame.setVisible(true);
         panelMain.setVisible(true);
         cardLayout.setVisible(true);
         panelStart.setVisible(true);
         frame.pack();
+            }
+        });
+    }
+
+    private void activateButtons(view.Views view){
+        buttonConsole.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                view.toConsole();
+            }
+        });
+        buttonCreateHero.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                view.setView("createHero");
+            }
+        });
+        buttonExistingHero.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Methods.loadHero();
+                if (hero != null){
+                    textAreaEH.setText(hero.getHeroInfo());
+                } else {
+                    textAreaEH.setText("There are no previously saved heros.");
+                };
+                view.setView("existingHero");
+            }
+        });
+        buttonCHMain.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                view.setView("start");
+            }
+        });
+        buttonEHMain.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                view.setView("start");
+            }
+        });
+        buttonSpiderman.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                heroName = showInputDialog("Please enter hero's name:");
+                createHero(heroName, "spiderman");
+               setTextAreaSpecs();
+                view.setView("game");
+            }
+        });
+        buttonSuperman.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                heroName = showInputDialog("Please enter hero's name:");
+                createHero(heroName, "superman");
+                setTextAreaSpecs();
+                view.setView("game");
+            }
+        });
+        buttonGMain.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                view.setView("start");
+            }
+        });
+        buttonSave.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                saveHero();
+            }
+        });
+        buttonSelectHero.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setTextAreaSpecs();
+                view.setView("game");
+            }
+        });
+    }
+
+    public void setTextAreaSpecs() {
+        if (hero != null) {
+            textAreaSpecs.setText(hero.getHeroInfo());
+        }
     }
 }
