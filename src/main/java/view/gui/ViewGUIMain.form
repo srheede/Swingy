@@ -212,7 +212,11 @@
                             <maximum-size width="260" height="260"/>
                           </grid>
                         </constraints>
-                        <properties/>
+                        <properties>
+                          <font size="20"/>
+                          <lineWrap value="false"/>
+                          <wrapStyleWord value="false"/>
+                        </properties>
                       </component>
                       <component id="98ccf" class="javax.swing.JTextArea" binding="textAreaSpecs">
                         <constraints>

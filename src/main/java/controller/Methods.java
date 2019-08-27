@@ -11,6 +11,7 @@ public class Methods {
 
     public static Hero hero;
     private static Map map;
+    private static Game game;
     private static PrintWriter file;
 
 
@@ -61,6 +62,10 @@ public class Methods {
         }
     }
 
+    public static void loadGame(){
+        game = new Game();
+    }
+
     public static void loadMap(){
         map = new Map();
     }
@@ -74,11 +79,10 @@ public class Methods {
         try {
            BufferedReader file = new BufferedReader(new FileReader("Heros.txt"));
            buffer = file.readLine();
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (Exception ignore) {
         }
-        hero = new Hero();
         if (buffer != null) {
+            hero = new Hero();
             String[] heroInfo = buffer.split(" ");
             hero.setHeroName(heroInfo[0]);
             hero.setCharacterType(heroInfo[1]);
@@ -143,12 +147,14 @@ public class Methods {
                             System.out.println("Please enter hero's name:");
                             createHero(reader.readLine(), "superman");
                             loadMap();
+                            loadGame();
                             view.setView("game");
                             break;
                         case 3:
                             System.out.println("Please enter hero's name:");
                             createHero(reader.readLine(), "spiderman");
                             loadMap();
+                            loadGame();
                             view.setView("game");
                             break;
                         case 4:
@@ -170,6 +176,7 @@ public class Methods {
                             break;
                         case 2:
                             loadMap();
+                            loadGame();
                             view.setView("game");
                             break;
                         case 3:

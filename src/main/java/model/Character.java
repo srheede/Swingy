@@ -1,5 +1,7 @@
 package model;
 
+import static controller.Methods.hero;
+
 public class Character {
     private int level;
     private String characterType;
@@ -15,6 +17,11 @@ public class Character {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public void levelUP(){
+        this.level++;
+        hero.setHeroInfo();
     }
 
     public String getCharacterType() {

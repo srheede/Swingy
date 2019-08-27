@@ -35,6 +35,7 @@ public class Views {
         viewGUIMain.panelCreateHero.setVisible(view.equals("createHero"));
         viewGUIMain.panelExistingHero.setVisible(view.equals("existingHero"));
         viewGUIMain.panelGame.setVisible(view.equals("game"));
+        viewGUIMain.keyListener(view.equals("game"));
         if (!GUIView) {
             viewConsoleMain.displayConsole();
         }

@@ -12,9 +12,11 @@ view/gui/ViewGUIMain.class
 view/gui/ViewGUIMain$1.class
 view/gui/ViewGUIMain$7.class
 view/console/ViewConsoleMain.class
+controller/Game.class
 view/gui/ViewGUIMain$2.class
 model/Map.class
 model/Character.class
+view/gui/ViewGUIMain$1$2.class
 view/gui/ViewGUIMain$9.class
 view/gui/ViewGUIMain$6.class
 Swingy.class

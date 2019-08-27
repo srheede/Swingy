@@ -46,7 +46,7 @@ public class ViewConsoleMain {
                         + "3. Return to Main Menu\n"
                         + "4. Exit";
             } else {
-                display = display + "\n There are no previously saved heros."
+                display = display + "\nThere are no previously saved heros."
                         + "\n\nPlease enter the number of the desired operation:\n"
                         + "\n1. Switch to GUI display\n"
                         + "2. Return to Main Menu\n"

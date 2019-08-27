@@ -6,9 +6,9 @@ import java.util.Random;
 import static controller.Methods.hero;
 
 public class Map {
-    private int size;
-    private char[][] map;
-    private char[][] hiddenMap;
+    private static int size;
+    public static char[][] map;
+    private static char[][] hiddenMap;
     private String string = "";
 
 
@@ -16,17 +16,27 @@ public class Map {
         setSize();
         fillMap();
         fillHiddenMap();
+        placePlayer();
+    }
+
+    public static void refreshMap() {
+        fillHiddenMap();
+        placePlayer();
     }
 
     public String getString(){
-        string = "";
-        for (char[] row : hiddenMap){
-            string = string + Arrays.toString(row) + "\n";
+        if (hero.getLevel() == 4) {
+            string = "You win!";
+        } else {
+            string = "";
+            for (char[] row : hiddenMap) {
+                string = string + Arrays.toString(row) + "\n";
+            }
         }
         return (string);
     }
 
-    public int getSize() {
+    public static int getSize() {
         return size;
     }
 
@@ -52,13 +62,17 @@ public class Map {
             map[j][k] = 'X';
         }
         map[size/2][size/2] = 'H';
+        hero.setCoordinates(size/2);
     }
 
-    public void fillHiddenMap() {
+    public static void fillHiddenMap() {
         hiddenMap = new char[size][size];
         for (char[] row : hiddenMap) {
             Arrays.fill(row, 'O');
         }
-        hiddenMap[size/2][size/2] = 'H';
+    }
+
+    public static void placePlayer() {
+        hiddenMap[hero.i][hero.j] = 'H';
     }
 }

@@ -7,11 +7,18 @@ public class Hero extends Character {
     private String heroName;
     private int experience;
     private int escape;
+    public int i;
+    public int j;
     private String heroInfo;
     private List<Artifact> artifacts = new ArrayList<Artifact>();
 
     public Hero(){
 
+    }
+
+    public void setCoordinates(int n) {
+        this.i = n;
+        this.j = n;
     }
 
     public String getHeroName() {
@@ -81,7 +88,7 @@ public class Hero extends Character {
     }
 
     public void setHeroInfo(){
-            heroInfo = " " + this.getHeroName()
+            heroInfo = " Player:" + this.getHeroName()
                     + "\n Hero Character: " + this.getCharacterType()
                     + "\n Level: " + this.getLevel()
                     + "\n XP: " + this.getExperience()
