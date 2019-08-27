@@ -1,8 +1,8 @@
 package controller;
 
-import module.Artifact;
-import module.Hero;
-import view.gui.ViewGUIMain;
+import model.Artifact;
+import model.Hero;
+import model.Map;
 
 import java.io.*;
 import java.util.List;
@@ -10,7 +10,9 @@ import java.util.List;
 public class Methods {
 
     public static Hero hero;
+    private static Map map;
     private static PrintWriter file;
+
 
     public static void createHero(String name, String character){
         hero = new Hero();
@@ -59,6 +61,14 @@ public class Methods {
         }
     }
 
+    public static void loadMap(){
+        map = new Map();
+    }
+
+    public static Map getMap() {
+        return map;
+    }
+
     public static void loadHero() {
         String buffer = null;
         try {
@@ -102,44 +112,125 @@ public class Methods {
     public static void runCommand(view.Views view){
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         try {
-            int option = Integer.parseInt(reader.readLine());
-            switch (option) {
-                case 1:
-                    view.updateGUI();
-                    view.toGUI();
+            switch (view.getCurrentScreen()) {
+                case "start":
+                switch (readOption(reader)) {
+                    case 1:
+                        view.updateGUI();
+                        view.toGUI();
+                        break;
+                    case 2:
+                        view.setView("createHero");
+                        break;
+                    case 3:
+                        loadHero();
+                        view.setView("existingHero");
+                        break;
+                    case 4:
+                        System.exit(1);
+                    default:
+                        System.out.println("Please enter valid selection.");
+                        runCommand(view);
+                }
+                break;
+                case "createHero":
+                    switch (readOption(reader)) {
+                        case 1:
+                            view.updateGUI();
+                            view.toGUI();
+                            break;
+                        case 2:
+                            System.out.println("Please enter hero's name:");
+                            createHero(reader.readLine(), "superman");
+                            loadMap();
+                            view.setView("game");
+                            break;
+                        case 3:
+                            System.out.println("Please enter hero's name:");
+                            createHero(reader.readLine(), "spiderman");
+                            loadMap();
+                            view.setView("game");
+                            break;
+                        case 4:
+                            view.setView("start");
+                            break;
+                        case 5:
+                            System.exit(1);
+                        default:
+                            System.out.println("Please enter valid selection.");
+                            runCommand(view);
+                    }
                     break;
-                case 2:
-                    view.setView("createHero");
+                case "existingHero":
+                    if (hero != null) {
+                    switch (readOption(reader)) {
+                        case 1:
+                            view.updateGUI();
+                            view.toGUI();
+                            break;
+                        case 2:
+                            loadMap();
+                            view.setView("game");
+                            break;
+                        case 3:
+                            view.setView("start");
+                            break;
+                        case 4:
+                            System.exit(1);
+                        default:
+                            System.out.println("Please enter valid selection.");
+                            runCommand(view);
+                    }
+                    } else {
+                            switch (readOption(reader)) {
+                                case 1:
+                                    view.updateGUI();
+                                    view.toGUI();
+                                    break;
+                                case 2:
+                                    view.setView("start");
+                                    break;
+                                case 3:
+                                    System.exit(1);
+                                default:
+                                    System.out.println("Please enter valid selection.");
+                                    runCommand(view);
+                        }
+                    }
                     break;
-                case 3:
-                    view.setView("existingHero");
+                case "game":
+                    switch (readOption(reader)) {
+                        case 1:
+                            view.updateGUI();
+                            view.toGUI();
+                            break;
+                        case 2:
+                            saveHero();
+                            System.out.println("\nHero has been saved.");
+                            view.setView("game");
+                            break;
+                        case 3:
+                            view.setView("start");
+                            break;
+                        case 4:
+                            System.exit(1);
+                        default:
+                            System.out.println("Please enter valid selection.");
+                            runCommand(view);
+                    }
                     break;
-                case 4:
-                    System.out.println("Please enter hero's name:");
-                    createHero(reader.readLine(), "superman" );
-                    view.setView("game");
-                    break;
-                case 5:
-                    System.out.println("Please enter hero's name:");
-                    createHero(reader.readLine(), "spiderman" );
-                    view.setView("game");
-                    break;
-                case 6:
-                    view.setView("start");
-                    break;
-                case 7:
-                    view.setView("game");
-                    break;
-                case 8:
-                    saveHero();
-                    System.out.println("\nHero has been saved.");
-                    view.setView("game");
-                    break;
-                default:
-                    System.out.println("Please enter valid selection.");
-            }
+                }
         } catch (Exception e){
             System.out.println(e);
+        }
+    }
+
+    private static int readOption(BufferedReader reader) {
+        try {
+            return (Integer.parseInt(reader.readLine()));
+        } catch (Exception e){
+            System.out.println("Please enter valid number of selection.");
+            return(readOption(reader));
         }
     }
 }

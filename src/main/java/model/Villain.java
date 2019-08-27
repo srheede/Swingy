@@ -1,4 +1,4 @@
-package module;
+package model;
 
 public class Villain extends Character {
     private int capture;

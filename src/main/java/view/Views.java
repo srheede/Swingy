@@ -4,11 +4,14 @@ import controller.Methods;
 import view.console.ViewConsoleMain;
 import view.gui.ViewGUIMain;
 
+import static controller.Methods.loadMap;
+
 public class Views {
 
     private boolean GUIView;
     private ViewGUIMain viewGUIMain;
     private ViewConsoleMain viewConsoleMain;
+    private String currentScreen;
 
     public Views(){
         viewGUIMain = new ViewGUIMain(this);
@@ -27,16 +30,25 @@ public class Views {
     }
 
     public void setView(String view){
-        viewConsoleMain.currentScreen = view;
+        currentScreen = view;
         viewGUIMain.panelStart.setVisible(view.equals("start"));
         viewGUIMain.panelCreateHero.setVisible(view.equals("createHero"));
         viewGUIMain.panelExistingHero.setVisible(view.equals("existingHero"));
         viewGUIMain.panelGame.setVisible(view.equals("game"));
-        if (!GUIView)
+        if (!GUIView) {
             viewConsoleMain.displayConsole();
+        }
     }
 
     public void updateGUI() {
         viewGUIMain.setTextAreaSpecs();
+    }
+
+    public String getCurrentScreen() {
+        return currentScreen;
+    }
+
+    public void setCurrentScreen(String currentScreen) {
+        this.currentScreen = currentScreen;
     }
 }

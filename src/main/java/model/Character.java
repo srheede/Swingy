@@ -1,6 +1,4 @@
-package module;
-
-import static controller.Methods.hero;
+package model;
 
 public class Character {
     private int level;

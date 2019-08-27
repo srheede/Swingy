@@ -1,8 +1,7 @@
 package view.gui;
 
 import controller.Methods;
-import module.Artifact;
-import module.Hero;
+import model.Map;
 
 import javax.swing.*;
 import java.awt.*;
@@ -99,6 +98,7 @@ public class ViewGUIMain extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 heroName = showInputDialog("Please enter hero's name:");
                 createHero(heroName, "spiderman");
+                loadMap();
                setTextAreaSpecs();
                 view.setView("game");
             }
@@ -108,6 +108,7 @@ public class ViewGUIMain extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 heroName = showInputDialog("Please enter hero's name:");
                 createHero(heroName, "superman");
+                loadMap();
                 setTextAreaSpecs();
                 view.setView("game");
             }
@@ -127,6 +128,7 @@ public class ViewGUIMain extends JFrame {
         buttonSelectHero.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                loadMap();
                 setTextAreaSpecs();
                 view.setView("game");
             }
@@ -136,6 +138,9 @@ public class ViewGUIMain extends JFrame {
     public void setTextAreaSpecs() {
         if (hero != null) {
             textAreaSpecs.setText(hero.getHeroInfo());
+        }
+        if (Methods.getMap() != null) {
+            textAreaGame.setText(Methods.getMap().getString());
         }
     }
 }
