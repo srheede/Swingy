@@ -11,6 +11,7 @@ import static controller.Game.conflict;
 import static controller.Game.nextLevel;
 import static controller.Methods.*;
 import static javax.swing.JOptionPane.showInputDialog;
+import static javax.swing.JOptionPane.showMessageDialog;
 
 public class ViewGUIMain extends JFrame {
     public JFrame frame = new JFrame();
@@ -172,22 +173,26 @@ public class ViewGUIMain extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 heroName = showInputDialog("Please enter hero's name:");
-                createHero(heroName, "spiderman");
-                loadMap();
-                loadGame();
-                setTextAreaSpecs();
-                view.setView("game");
+                if (heroName != null) {
+                    createHero(heroName, "spiderman");
+                    loadMap();
+                    loadGame();
+                    setTextAreaSpecs();
+                    view.setView("game");
+                }
             }
         });
         buttonSuperman.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 heroName = showInputDialog("Please enter hero's name:");
-                createHero(heroName, "superman");
-                loadMap();
-                loadGame();
-                setTextAreaSpecs();
-                view.setView("game");
+                if (heroName != null) {
+                    createHero(heroName, "superman");
+                    loadMap();
+                    loadGame();
+                    setTextAreaSpecs();
+                    view.setView("game");
+                }
             }
         });
         buttonGMain.addActionListener(new ActionListener() {
@@ -219,8 +224,11 @@ public class ViewGUIMain extends JFrame {
         }
         if (Methods.getMap() != null) {
             setMapSize();
-            if (hero.getLevel() == 4){
+            if (hero.getLevel() == 4 || hero.getLevel() == 0){
                 keyListener(false);
+                buttonSave.setVisible(false);
+            } else {
+                buttonSave.setVisible(true);
             }
             textAreaGame.setText(Methods.getMap().getString());
         }

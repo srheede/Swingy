@@ -27,6 +27,8 @@ public class Map {
     public String getString(){
         if (hero.getLevel() == 4) {
             string = "You win!";
+        } else if (hero.getLevel() == 0) {
+            string = "You lost the game..";
         } else {
             string = "";
             for (char[] row : hiddenMap) {

@@ -9,7 +9,7 @@ import static controller.Methods.loadMap;
 public class Views {
 
     private boolean GUIView;
-    private ViewGUIMain viewGUIMain;
+    public static ViewGUIMain viewGUIMain;
     private ViewConsoleMain viewConsoleMain;
     private String currentScreen;
 

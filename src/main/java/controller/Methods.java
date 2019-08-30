@@ -5,6 +5,7 @@ import model.Hero;
 import model.Map;
 
 import java.io.*;
+import java.lang.reflect.AnnotatedType;
 import java.util.List;
 
 public class Methods {
@@ -13,6 +14,7 @@ public class Methods {
     private static Map map;
     private static Game game;
     private static PrintWriter file;
+    private static int count = 0;
 
 
     public static void createHero(String name, String character){
@@ -22,37 +24,47 @@ public class Methods {
         hero.setLevel(1);
         hero.setCharacterType(character);
         if (character.equals("superman")){
-            hero.setAttack(70);
+            hero.setAttack(85);
             hero.setDefence(200);
-            hero.setStrikeAccuracy(1);
-            hero.setEscape(1);
+            hero.setStrikeAccuracy(35);
+            hero.setEscape(25);
         } else {
-            hero.setAttack(25);
+            hero.setAttack(35);
             hero.setDefence(110);
-            hero.setStrikeAccuracy(4);
-            hero.setEscape(2);
+            hero.setStrikeAccuracy(100);
+            hero.setEscape(50);
         }
     }
 
     public static void saveHero(){
+        String[] newLines;
+        String artifactName;
         try {
             file = new PrintWriter(new File("Heros.txt"));
             List<Artifact> artifacts = hero.getArtifacts();
             file.print(hero.getHeroName()
-                    + " " + hero.getCharacterType()
-                    + " " + hero.getExperience()
-                    + " " + hero.getLevel()
-                    + " " + hero.getAttack()
-                    + " " + hero.getDefence()
-                    + " " + hero.getStrikeAccuracy()
-                    + " " + hero.getEscape());
+                    + ":" + hero.getCharacterType()
+                    + ":" + hero.getExperience()
+                    + ":" + hero.getLevel()
+                    + ":" + hero.getAttack(false)
+                    + ":" + hero.getDefence(false)
+                    + ":" + hero.getStrikeAccuracy()
+                    + ":" + hero.getEscape(false));
             if(artifacts != null){
-                file.print(" ");
+                file.print(":");
             for(Artifact artifact : artifacts){
-                    file.print("-" + artifact.getName()
-                            + "_" + artifact.getWeapon()
-                            + "_" + artifact.getArmor()
-                            + "_" + artifact.getHelm());
+                newLines = artifact.getName().split("\n");
+                artifactName = "";
+                for (String newLine : newLines) {
+                    artifactName = artifactName.concat(newLine);
+                    artifactName = artifactName.concat("~");
+                }
+                    file.print(artifactName
+                            + "/" + artifact.getType()
+                            + "/" + artifact.getWeapon()
+                            + "/" + artifact.getArmor()
+                            + "/" + artifact.getHelm()
+                            + ";");
             }
             }
             file.print("\n");
@@ -75,15 +87,18 @@ public class Methods {
     }
 
     public static void loadHero() {
-        String buffer = null;
+        String[] newLines;
+        String artifactName;
+        String buffer = "";
         try {
            BufferedReader file = new BufferedReader(new FileReader("Heros.txt"));
            buffer = file.readLine();
+
         } catch (Exception ignore) {
         }
         if (buffer != null) {
             hero = new Hero();
-            String[] heroInfo = buffer.split(" ");
+            String[] heroInfo = buffer.split(":");
             hero.setHeroName(heroInfo[0]);
             hero.setCharacterType(heroInfo[1]);
             hero.setExperience(Integer.parseInt(heroInfo[2]));
@@ -93,14 +108,21 @@ public class Methods {
             hero.setStrikeAccuracy(Integer.parseInt(heroInfo[6]));
             hero.setEscape(Integer.parseInt(heroInfo[7]));
             if (heroInfo.length == 9){
-                String[] artifacts = heroInfo[8].split("-");
+                String[] artifacts = heroInfo[8].split(";");
                 for(String artifact : artifacts){
-                    String[] artifactInfo = artifact.split("_");
+                    String[] artifactInfo = artifact.split("/");
                     Artifact Artifact = new Artifact();
-                    Artifact.setName(artifactInfo[0]);
-                    Artifact.setWeapon(Integer.parseInt(artifactInfo[1]));
-                    Artifact.setArmor(Integer.parseInt(artifactInfo[2]));
-                    Artifact.setHelm(Integer.parseInt(artifactInfo[3]));
+                    newLines = artifactInfo[0].split("~");
+                    artifactName = "";
+                    for (String newLine : newLines) {
+                        artifactName = artifactName.concat(newLine);
+                        artifactName = artifactName.concat("\n");
+                    }
+                    Artifact.setName(artifactName);
+                    Artifact.setType(artifactInfo[1]);
+                    Artifact.setWeapon(Integer.parseInt(artifactInfo[2]));
+                    Artifact.setArmor(Integer.parseInt(artifactInfo[3]));
+                    Artifact.setHelm(Integer.parseInt(artifactInfo[4]));
                     hero.addArtifact(Artifact);
                 }
             }

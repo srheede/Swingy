@@ -39,8 +39,14 @@ public class Hero extends Character {
         setHeroInfo();
     }
 
-    public int getEscape() {
-        return escape;
+    public int getEscape(boolean add) {
+        int n = escape;
+        if (add) {
+            for (Artifact artifact : artifacts) {
+                n += artifact.getHelm();
+            }
+        }
+        return n;
     }
 
     public void setEscape(int escape) {
@@ -55,6 +61,17 @@ public class Hero extends Character {
     public void addArtifact(Artifact artifact) {
         this.artifacts.add(artifact);
         setHeroInfo();
+    }
+
+    @Override
+    public int getAttack(boolean add) {
+        int attack = super.getAttack(false);
+        if (add) {
+            for (Artifact artifact : artifacts) {
+                attack += artifact.getWeapon();
+            }
+        }
+        return attack;
     }
 
     @Override
@@ -82,29 +99,46 @@ public class Hero extends Character {
     }
 
     @Override
+    public int getDefence(boolean add) {
+        int defence = super.getDefence(false);
+        if (add) {
+            for (Artifact artifact : artifacts) {
+                defence += artifact.getArmor();
+            }
+        }
+        return defence;
+    }
+
+    @Override
     public void setDefence(int defence) {
         super.setDefence(defence);
         setHeroInfo();
     }
 
     public void setHeroInfo(){
-            heroInfo = " Player:" + this.getHeroName()
-                    + "\n Hero Character: " + this.getCharacterType()
+        String[] newLines;
+        String artifactName;
+        heroInfo = " Player: " + this.getHeroName()
+                    + "\n\n Hero Character: " + this.getCharacterType()
                     + "\n Level: " + this.getLevel()
                     + "\n XP: " + this.getExperience()
-                    + "\n Attack: " + this.getAttack()
-                    + "\n Defence: " + this.getDefence()
-                    + "\n Strike Accuracy: " + this.getStrikeAccuracy() + "/4"
-                    + "\n Escape: " + this.getEscape() + "/4"
-                    + "\n Artifacts:\n";
+                    + "\n\n Attack: " + this.getAttack(true)
+                    + "\n Defence: " + this.getDefence(true)
+                    + "\n Strike Accuracy: " + this.getStrikeAccuracy() + "%"
+                    + "\n Escape: " + this.getEscape(true) + "%"
+                    + "\n\n Artifacts:\n";
             if (this.getArtifacts().isEmpty()){
                 heroInfo = heroInfo.concat(" Hero doesn't have any artifacts.");
             }
             for (Artifact artifact : this.getArtifacts()){
-                heroInfo = heroInfo.concat(artifact.getName()
-                        + "\tWeapon: " + artifact.getWeapon()
-                        + " Armor: " + artifact.getArmor()
-                        + " Helm: " + artifact.getHelm() + "\n");
+                newLines = artifact.getName().split("~");
+                artifactName = "";
+                for (String newLine : newLines) {
+                    artifactName = artifactName.concat(newLine);
+                    artifactName = artifactName.concat("\n");
+                }
+                String[] words = artifactName.split("\n");
+                heroInfo = heroInfo.concat(" " + words[0] + "\n " + words[1] + "\n");
             }
     }
 

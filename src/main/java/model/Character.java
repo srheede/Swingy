@@ -8,8 +8,7 @@ public class Character {
     private int attack;
     private int defence;
     private int strikeAccuracy;
-    private int xCoordinate;
-    private int yCoordinate;
+    private Artifact artifact;
 
     public int getLevel() {
         return level;
@@ -32,7 +31,7 @@ public class Character {
         this.characterType = characterType;
     }
 
-    public int getAttack() {
+    public int getAttack(boolean add) {
         return attack;
     }
 
@@ -40,7 +39,7 @@ public class Character {
         this.attack = attack;
     }
 
-    public int getDefence() {
+    public int getDefence(boolean add) {
         return defence;
     }
 
@@ -56,19 +55,4 @@ public class Character {
         this.strikeAccuracy = strikeAccuracy;
     }
 
-    public int getxCoordinate() {
-        return xCoordinate;
-    }
-
-    public void setxCoordinate(int xCoordinate) {
-        this.xCoordinate = xCoordinate;
-    }
-
-    public int getyCoordinate() {
-        return yCoordinate;
-    }
-
-    public void setyCoordinate(int yCoordinate) {
-        this.yCoordinate = yCoordinate;
-    }
 }
