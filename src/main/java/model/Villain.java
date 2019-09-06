@@ -9,7 +9,7 @@ public class Villain extends Character {
 
     public Villain(int n){
         Random rand = new Random();
-        artifact = new Artifact(rand.nextInt(13));
+        artifact = new Artifact(rand.nextInt(14));
         switch (n){
             case 0:
                 super.setCharacterType("Doctor Octopus");

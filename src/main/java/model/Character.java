@@ -1,8 +1,11 @@
 package model;
 
+import javax.validation.constraints.NotNull;
+
 import static controller.Methods.hero;
 
 public class Character {
+    @NotNull (message = "This is null.")
     private int level;
     private String characterType;
     private int attack;
@@ -28,8 +31,7 @@ public class Character {
     }
 
     public void setCharacterType(String characterType) {
-        this.characterType = characterType;
-    }
+        this.characterType = characterType; }
 
     public int getAttack(boolean add) {
         return attack;

@@ -4,7 +4,6 @@ import view.gui.ViewGUIMain;
 import javax.swing.*;
 
 public class Swingy {
-
     public static void main(String[] args){
         Views view = new Views();
         if (args.length == 1 && args[0].equalsIgnoreCase("GUI")){
@@ -12,9 +11,5 @@ public class Swingy {
         } else {
             view.toConsole();
         }
-    }
-    public static void Error(String message){
-        System.out.println(message);
-        System.exit(-1);
     }
 }

@@ -83,11 +83,20 @@ public class Artifact {
                 name = "One Ring\nHelm +30%";
                 type = "Helm";
                 helm = 30;
+                break;
             case 13:
-                name = "Spiderman Webshooter\nHelm +55% Weapon +20";
+                name = "Spiderman Webshooter\nHelm +55% Weapon +40";
                 type = "Helm";
                 helm = 55;
                 weapon = 20;
+                break;
+            case 14:
+                name = "Easter Egg\n Helm +100% Weapon +100 Armor +100";
+                type = "Helm";
+                helm = 100;
+                weapon = 100;
+                armor = 100;
+                break;
         }
     }
 

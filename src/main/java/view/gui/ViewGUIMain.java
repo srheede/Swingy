@@ -11,7 +11,6 @@ import static controller.Game.conflict;
 import static controller.Game.nextLevel;
 import static controller.Methods.*;
 import static javax.swing.JOptionPane.showInputDialog;
-import static javax.swing.JOptionPane.showMessageDialog;
 
 public class ViewGUIMain extends JFrame {
     public JFrame frame = new JFrame();
